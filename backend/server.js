@@ -13,7 +13,15 @@ dotenv.config();
 
 const app = express();
 
-app.get("/", (req, res) => {});
+app.post("/products", async(req, res) => {
+    // User will send a POST request to this endpoint with product data
+    const product = req.body;
+    if  (!product.name || !product.price || !product.image) {
+        // Status 400 means Bad Request
+        // This means that the user did not provide all the required fields
+        return res.status(400).json({ message: "All fields are required" });
+    }
+});
 
 // console.log(process.env.MONGO_URI)
 
