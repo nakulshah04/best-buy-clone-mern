@@ -37,7 +37,24 @@ app.post("/api/products", async(req, res) => {
     }
 });
 
-// console.log(process.env.MONGO_URI)
+// User will send a DELETE request to this endpoint with the product id
+// The id will be dynamically passed in the URL
+app.delete("/api/products/:id", async(req, res) => {
+    // Extract the product id from the request parameters
+    const { id } = req.params;
+    try {
+        // Find the product by ID and delete it
+        const product = await Product.findByIdAndDelete(id);
+        // If the product is not found, return a 404 error
+        if (!product) {
+            return res.status(404).json({ success: false, message: "Product not found" });
+        }
+        res.status(200).json({ success: true, data: {} });
+    } catch (error) {
+        console.error("Error deleting product:", error.message);
+        res.status(500).json({ success: false, message: "Server Error" });
+    }
+});
 
 app.listen(5000, () => {
     connectDB();
