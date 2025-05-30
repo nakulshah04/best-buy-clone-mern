@@ -12,8 +12,8 @@ This project is a simplistic clone of the Best Buy website, built using the **ME
 
 Running `npm init -y` initializes a `package.json` file in the root directory of the project. This file:
 
-- 📚 Manages project configurations, scripts, and metadata.
-- 🔧 Tracks dependencies and development tools.
-- ▶️ Enables scripts like `npm run dev` to start both frontend and backend servers concurrently for easier development.
+- Manages project configurations, scripts, and metadata.
+- Tracks dependencies and development tools.
+- Enables scripts like `npm run dev` to start both frontend and backend servers concurrently for easier development.
 
 This setup also aids in deployment by ensuring consistent package versions and configurations.
