@@ -9,6 +9,7 @@ import dotenv from "dotenv";
 import express from "express";
 import { connectDB } from "./config/db.js";
 import Product from "./models/product.model.js";
+import mongoose from "mongoose";
 
 dotenv.config();
 
@@ -51,6 +52,28 @@ app.post("/api/products", async(req, res) => {
     }
 });
 
+// If updating all the fields of a product, we send a PUT request
+// If updating only a few fields of a product, we send a PATCH request
+app.put("/api/products/:id", async(req, res) => {
+    const { id } = req.params;
+    // Contains the different fields of the product that we want to update
+    const product = req.body;
+
+    // Check if the id is a valid MongoDB ObjectId
+    if(mongoose.Types.ObjectId.isValid(id) === false) {
+        return res.status(404).json({ success: false, message: "Product not found" });
+    }
+
+    try {
+        // findByIdAndUpdate will find the product by id and update it with the new product data
+        // new: true means that we want to return the updated product
+        const updatedProduct = await Product.findByIdAndUpdate(id, product, {new: true});
+        res.status(200).json({ success: true, updatedProduct});
+    } catch (error) {
+        res.status(500).json({ success: false, message: "Server Error" });
+    }
+});
+
 // User will send a DELETE request to this endpoint with the product id
 app.delete("/api/products/:id", async(req, res) => {
     // // The id will be dynamically passed in the URL
@@ -61,6 +84,7 @@ app.delete("/api/products/:id", async(req, res) => {
         res.json({ success: true, message: "Product deleted successfully" });
 
     } catch (error) {
+        console.log("Error deleting product:", error.message);
         res.status(404).json({ success: false, message: "Product not found" });
     }
 });
