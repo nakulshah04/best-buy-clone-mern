@@ -17,3 +17,9 @@ Running `npm init -y` initializes a `package.json` file in the root directory of
 - Enables scripts like `npm run dev` to start both frontend and backend servers concurrently for easier development.
 
 This setup also aids in deployment by ensuring consistent package versions and configurations.
+
+## Steps for creating an API
+
+- Have a route for each API (for instance, `products`) in `server.js`
+- For each route, we put them under an api-specific routing file such as `product.route.js` with their methods and related endpoints
+- Create a controller file (for instance, `product.controller.js`) that contains code for handling all the api-specific CRUD methods
