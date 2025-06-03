@@ -55,12 +55,18 @@ export const deleteProduct = async(req, res) => {
     // // The id will be dynamically passed in the URL
     // Extract the product id from the request parameters
     const { id } = req.params;
+
+    // Check if the id is a valid MongoDB ObjectId
+    if(mongoose.Types.ObjectId.isValid(id) === false) {
+        return res.status(404).json({ success: false, message: "Product not found" });
+    }
+    
     try {
         await Product.findByIdAndDelete(id);
         res.json({ success: true, message: "Product deleted successfully" });
 
     } catch (error) {
         console.log("Error deleting product:", error.message);
-        res.status(404).json({ success: false, message: "Product not found" });
+        res.status(500).json({ success: false, message: "Server Error" });
     }
 }
