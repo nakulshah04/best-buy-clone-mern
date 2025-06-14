@@ -15,7 +15,7 @@ dotenv.config();
 const app = express();
 
 // Port on which the server will run
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 5050;
 
 // Middleware to parse the JSON bodies passed in the requests
 app.use(express.json());
